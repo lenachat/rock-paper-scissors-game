@@ -7,12 +7,31 @@ let score = JSON.parse(localStorage.getItem('score')) || /* default operator: se
 };
 
 function reset() {
-    score.wins = 0;
-    score.losses = 0;
-    score.ties = 0;
+    score = {
+        wins: 0,
+        losses: 0,
+        ties: 0
+    };
     localStorage.removeItem(JSON.stringify(score));
     document.querySelector('.score').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    document.querySelector('.result').innerHTML = 'Pick a move';
+    document.querySelector('.result').classList.add('blinking-text');
+    document.querySelector('.your-move').innerHTML = '';
+    document.querySelector('.your-wins').innerHTML = '0';
+    document.querySelector('.computer-move').innerHTML = '';
+    document.querySelector('.computer-wins').innerHTML = '0';
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector('.score').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    document.querySelector('.result').innerHTML = 'Pick a move';
+    document.querySelector('.result').classList.add('blinking-text');
+    document.querySelector('.your-move').innerHTML = '';
+    document.querySelector('.your-wins').innerHTML = `${score.wins}`;
+    document.querySelector('.computer-move').innerHTML = '';
+    document.querySelector('.computer-wins').innerHTML = `${score.losses}`;
+    document.querySelector('.reset').addEventListener('click', reset);
+ });
 
 document.querySelector('.rock-button').addEventListener('click', () => {
     compareYourMove('rock');
@@ -36,7 +55,7 @@ function compareYourMove(playerMove) {
             result = 'You lose.';
         }
         else if (computerMove === 'paper') {
-            result = 'You win.';
+            result = 'You win !';
         }
         else if (computerMove === 'scissors') {
             result = 'Tie.';
@@ -45,7 +64,7 @@ function compareYourMove(playerMove) {
 
     else if (playerMove === 'paper') {
         if (computerMove === 'rock') {
-            result = 'You win.';
+            result = 'You win !';
         }
         else if (computerMove === 'paper') {
             result = 'Tie.';
@@ -61,11 +80,11 @@ function compareYourMove(playerMove) {
         } else if (computerMove === 'paper') {
             result = 'You lose.';
         } else if (computerMove === 'scissors') {
-            result = 'You win.';
+            result = 'You win !';
         }
     }
 
-    if (result === 'You win.') {
+    if (result === 'You win !') {
         score.wins += 1;
     }
 
@@ -79,11 +98,13 @@ function compareYourMove(playerMove) {
 
 
     localStorage.setItem('score', JSON.stringify(score));
-
-    document.querySelector('.move').innerHTML = `You <img src="images/${playerMove}-emoji.png" class="move-icons"> - <img src="images/${computerMove}-emoji.png" class="move-icons"> Computer`;
-    document.querySelector('.score').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    document.querySelector('.your-move').innerHTML = `<img src="images/${playerMove}-emoji.png" class="move-icons">`;
+    document.querySelector('.your-wins').innerHTML = `${score.wins}`;
+    document.querySelector('.computer-move').innerHTML = `<img src="images/${computerMove}-emoji.png" class="move-icons">`;
+    document.querySelector('.computer-wins').innerHTML = `${score.losses}`;
     document.querySelector('.result').innerHTML = result;
-
+    document.querySelector('.result').classList.remove('blinking-text');
+    document.querySelector('.score').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
 }
 
 function pickComputerMove() {

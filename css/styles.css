@@ -1,42 +1,146 @@
+@font-face {
+    font-family: 'ChumiChami';
+    src: url('../fonts/ChumiChami.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --primary-color: #e55e34;
+    --secondary-color: #f5c3cc;
+    --primary-color-dark: #c5512e;
+    --primary-font: 'ChumiChami', sans-serif;
+    --h1-font-size: 40px;
+    --h2-font-size: 25px;
+    --p-font-size: 15px;
+    --button-font-size: 12px;
+}
+
 body {
-    background-color: rgb(25, 25, 25);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.result-container {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: 50px;
+}
+
+.column:nth-child(3) {
+    margin-top: 50px;
+}
+
+.column {
+    min-width: 250px;
+    flex: 1;
+}
+
+h1 {
+    font-size: var(--h1-font-size);
 }
 
 h2 {
-    font-weight: 100;
+    font-size: var(--h2-font-size);
+}
+
+p {
+    font-size: var(--p-font-size);
+    min-height: 23.5px;
+    margin: 0;
 }
 
 .move-icons {
     height: 50px;
-    border-radius: 20px;
 }
 
 .move-buttons {
-    background-color: transparent;
-    border: 3px solid white;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
     width: 100px;
     height: 100px;
-    border-radius: 50px;
+    border-radius: 43%;
     margin: 7px;
     cursor: pointer;
 }
 
+.computer-move>img {
+    height: 30px;
+    padding: 10px;
+    border-radius: 43%;
+    background-color: var(--primary-color);
+}
+
+.your-move>img {
+    height: 30px;
+    padding: 10px;
+    border-radius: 43%;
+    background-color: var(--primary-color);
+}
+
+.your-move,
+.computer-move {
+    height: 50px;
+    margin: 15px;
+}
+
+.move-buttons:hover {
+    background-color: var(--primary-color-dark);
+    border: 3px solid var(--primary-color-dark);
+}
+
+.your-wins,
+.computer-wins {
+    margin: 0;
+}
+
 .result {
-    font-size: 25px;
+    font-size: var(--h2-font-size);
     font-weight: bold;
-    margin-top: 50px;
+    margin: 40px;
 }
 
 .score {
-    margin-top: 60px;
+    height: 23.5px;
+    margin: 20px;
 }
 
 .reset-button {
-    background-color: white;
+    background-color: #e55e34;
+    color: var(--secondary-color);
     border: none;
-    font-size: 15px;
+    font-family: var(--primary-font);
+    font-size: var(--button-font-size);
     padding: 8px 15px;
     cursor: pointer;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+
+.blinking-text {
+    animation: blink 1.3s ease-in-out infinite;
+    color: #e55e34;
 }
