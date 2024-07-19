@@ -101,6 +101,7 @@ p {
 .your-move,
 .computer-move {
     margin: 15px;
+    min-height: 61px;
 }
 
 .your-wins,
@@ -239,6 +240,11 @@ p {
         width: 80px;
         height: 80px;
         margin: 5px;
+    }
+
+    .your-move,
+    .computer-move {
+        min-height: 48px;
     }
 
     .your-move>img {
