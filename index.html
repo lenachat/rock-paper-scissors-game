@@ -8,24 +8,22 @@
 
 <body>
   <div class="container">
-    <h1 class="title">Rock Paper Scissors</h1>
+    <h1>Rock Paper Scissors</h1>
 
     <div class="scores-container">
-      <div class="column">
+      <div class="scores">
         <h2>You</h2>
         <p>Score</p>
         <p class="your-wins"></p>
         <p class="your-move"></p>
       </div>
 
-      <div class="column">
+      <div class="scores">
         <h2>Computer</h2>
         <p>Score</p>
         <p class="computer-wins"></p>
         <p class="computer-move"></p>
       </div>
-
-
     </div>
 
     <div>
@@ -34,24 +32,36 @@
 
     <div>
       <button class="move-buttons" onclick="compareYourMove('rock');">
-        <img src="images/rock-emoji.png" class="move-icons" alt="rock">
+        <img src="media/images/rock-emoji.png" class="move-icons" alt="rock">
       </button>
 
       <button class="move-buttons" onclick="compareYourMove('paper');">
-        <img src="images/paper-emoji.png" class="move-icons" alt="paper">
+        <img src="media/images/paper-emoji.png" class="move-icons" alt="paper">
       </button>
 
       <button class="move-buttons" onclick="compareYourMove('scissors');">
-        <img src="images/scissors-emoji.png" class="move-icons" alt="scissors">
+        <img src="media/images/scissors-emoji.png" class="move-icons" alt="scissors">
       </button>
     </div>
-    <p class="score"></p>
+    <p class="score-overview"></p>
 
     <button class="reset-button" onclick="reset();">
       Reset Score
     </button>
   </div>
 
+  <div id="gameOverModal" class="modal">
+    <div class="modal-content">
+      <span id="gameOverMessage"></span>
+      <div class="modal-buttons">
+        <button id="playAgainButton" class="modal-btn">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dim-effect"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 

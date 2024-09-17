@@ -22,18 +22,18 @@ function reset() {
 
 // display current score
 function displayScore() {
-    document.querySelector('.score').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    document.querySelector('.score-overview').innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
 }
 
 // update moves display
 function updateMovesDisplay(playerMove, computerMove, playerWins, computerWins) {
-    document.querySelector('.your-move').innerHTML = playerMove ? `<img src="images/${playerMove}-emoji.png" class="move-icons">` : '';
+    document.querySelector('.your-move').innerHTML = playerMove ? `<img src="media/images/${playerMove}-emoji.png" class="move-icons">` : '';
     document.querySelector('.your-wins').innerHTML = playerWins;
-    document.querySelector('.computer-move').innerHTML = computerMove ? `<img src="images/${computerMove}-emoji.png" class="move-icons">` : '';
+    document.querySelector('.computer-move').innerHTML = computerMove ? `<img src="media/images/${computerMove}-emoji.png" class="move-icons">` : '';
     document.querySelector('.computer-wins').innerHTML = computerWins;
 }
 
-// Handle page load
+// handle page load
 document.addEventListener("DOMContentLoaded", () => {
     displayScore();
     document.querySelector('.result').innerHTML = 'Pick a move';
@@ -42,18 +42,72 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.reset').addEventListener('click', reset);
 });
 
-// event listerners for move buttons
-document.querySelector('.rock-button').addEventListener('click', () => {
-    compareYourMove('rock');
-});
+// check if either of the players has 5 points and show modal
+function checkGameOver() {
+    if (score.wins === 5) {
+        showGameOverModal(`You've hit 5 points! <br> You win the game!`);
+    } else if (score.losses === 5) {
+        showGameOverModal('Computer got 5 points! <br> You lose the game.');
+    }
+}
 
-document.querySelector('.paper-button').addEventListener('click', () => {
-    compareYourMove('paper');
-});
+// show the modal with the game over message
+function showGameOverModal(message) {
+    const modal = document.getElementById('gameOverModal');
+    document.getElementById('gameOverMessage').innerHTML = message;
 
-document.querySelector('.scissors-button').addEventListener('click', () => {
-    compareYourMove('scissors');
-});
+    if (message.includes('You win')) {
+        launchConfetti();
+        const winSound = new Audio('media/sounds/win-sound.mp3');
+        winSound.play();
+    }
+
+    if (message.includes('You lose')) {
+        document.getElementById('dim-effect').style.display = 'block';
+        const loseSound = new Audio('media/sounds/lose-sound.mp3');
+        loseSound.play();
+    }
+
+    setTimeout(() => {
+        modal.style.display = 'flex';
+    }, 1500);
+
+    // Add event listener to the modal buttons
+    document.getElementById('playAgainButton').addEventListener('click', () => {
+        reset(); // reset score
+        const modal = document.getElementById('gameOverModal');
+        modal.style.display = 'none'; // Hide modal
+
+        const dimEffect = document.getElementById('dim-effect');
+        if (dimEffect.style.display === 'block') {
+            dimEffect.style.display = 'none'; // Hide the overlay
+        }
+    });
+}
+
+function launchConfetti() {
+    var duration = 3 * 1000; // 3 Sekunden
+    var end = Date.now() + duration;
+
+    // Konfetti aus verschiedenen Winkeln starten
+    var interval = setInterval(function () {
+        if (Date.now() > end) {
+            return clearInterval(interval);
+        }
+
+        confetti({
+            startVelocity: 20,
+            spread: 360,
+            ticks: 60,
+            zIndex: 1000,
+            particleCount: 100,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2 // Start ein wenig über dem Bildschirm
+            }
+        });
+    }, 250);
+}
 
 // compare player's move with computer's move
 function compareYourMove(playerMove) {
@@ -100,7 +154,7 @@ function compareYourMove(playerMove) {
     document.querySelector('.result').classList.remove('blinking-text');
     displayScore();
     updateMovesDisplay(playerMove, computerMove, score.wins, score.losses);
-
+    checkGameOver();
 }
 
 // update score 
